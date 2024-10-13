@@ -38,4 +38,21 @@ function cl() {
     # use your preferred ls command
  ls -F --color=auto
 }
+
+
+# generate signature for document with default namings
+# usage: signdoc <document-path>
+signdoc() {
+  openssl genpkey -algorithm RSA -out private_key.pem > /dev/null 2>&1
+
+  openssl rsa -pubout -in private_key.pem -out public_key.pem > /dev/null 2>&1
+
+  openssl dgst -sha256 -sign private_key.pem -out signature.bin "$1" > /dev/null 2>&1
+}
+
+# verify signature of document
+# usage: verifydoc public_key.pem signature.bin <document-path>
+verifydoc() {
+  openssl dgst -sha256 -verify "$1" -signature "$2" "$3"
+}
 ```
