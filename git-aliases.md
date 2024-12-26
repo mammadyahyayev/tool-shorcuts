@@ -6,6 +6,9 @@ s = status
 # flog means formatted log
 flog = log --oneline --graph
 
+# falog means format log with authors
+falog = log --pretty=format:"%C(yellow)%h %C(cyan)%an %C(green)%ad %C(reset)%s" --date=local
+
 # rflog means format logs but in reverse
 rflog = log --reverse --oneline
 
@@ -40,4 +43,7 @@ wg = whatchanged
 
 # subu means submodule update
 subu = submodule update --recursive
+
+# rmstalebr means remove stale branches (branches that are no longer exists on remote repository but exists in local)
+rmstalebr = branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -d
 ```
